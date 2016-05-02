@@ -1,11 +1,11 @@
 #!/bin/bash
 ######################################################################
-## Simple script to make backups to google drive useing "rsunc"      #
+## Simple script to make backups to google drive useing "rclone"     #
 ## The main feature is to have 3 coppys on gdrive                    #
 ## How much backups to have can be set here  /sed '1,3d'/            #
 ## it mean that we leave 3 lines from file list other will be deleted#
 ######################################################################
-echo "Staring backup to Gdrive useing rsync"
+echo "Staring backup to Gdrive useing rclone"
 cp -r /etc/ /home/home/backup
 cp -r /var/www/ /home/home/backup 
 #cp /var/lib/libvirt/images/vs.img /home/home/backup
