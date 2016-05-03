@@ -5,11 +5,27 @@
 ## How much backups to have can be set here  /sed '1,3d'/            #
 ## it mean that we leave 3 lines from file list other will be deleted#
 ######################################################################
-echo "Staring backup to Gdrive useing rsync"
+echo "Staring backup to Gdrive useing rclone"
+echo "if directory exist backup have to be created"
+backupdir="/home/home/backup"
+	if [ -e "$backupdir" ]
+		then
+        		echo "BAckup directory exist lets clear it to be shure its cleare"
+			   if [ -e "$backupdir" ]
+                	   then
+			   rm -rf /home/home/backup/*
+		else
+        		mkdir /home/home/backup
+	   fi
+	fi
 cp -r /etc/ /home/home/backup
-cp -r /var/www/ /home/home/backup 
+cp -r /var/www/ /home/home/backup
+cp -r /bin/ /home/home/backup
+cp -r /boot/ /home/home/backup
+#cp -r /lib/ /home/home/backup
+#cp -r /usr /home/home/backup
 #cp /var/lib/libvirt/images/vs.img /home/home/backup
-mysqldump --all-databases > /home/home/backup/dump-$( date '+%Y-%m-%d_%H-%M-%S' ).sql -u root -p PPPPPPPP 
+mysqldump -u root -pXXXXXX --all-databases> /home/home/backup/dump-$( date '+%Y-%m-%d_%H-%M-%S' ).sql
 zip -r /home/home/"backup-$(date +"%Y-%m-%d").zip" /home/home/backup/
 rclone copy /home/home/backup-*.zip gdrive:backup
 rm -rf /home/home/backup/*
