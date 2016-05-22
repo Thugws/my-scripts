@@ -1,4 +1,4 @@
-#!/bin/bash
+-#!/bin/bash
 ######################################################################
 ## Simple script to make backups to google drive useing "rclone"     #
 ## The main feature is to have 3 coppys on gdrive                    #
@@ -6,8 +6,14 @@
 ## it mean that we leave 3 lines from file list other will be deleted#
 ######################################################################
 echo "Staring backup to Gdrive useing rclone"
-<<<<<<< HEAD
 echo "if directory exist backup have to be created"
+sqlpasswd="/home/home/sqlpasswd"
+	if [ -e "$sqlpasswd" ]
+		then
+			echo "sql password accsesible"
+		else 
+			exit && echo "sql password accsesible unaccsesible" && exit
+	fi
 backupdir="/home/home/backup"
 	if [ -e "$backupdir" ]
 		then
@@ -19,8 +25,6 @@ backupdir="/home/home/backup"
         		mkdir /home/home/backup
 	   fi
 	fi
-=======
->>>>>>> 26c427bea982a910b1ed04f0e771cc4e4f38aa95
 cp -r /etc/ /home/home/backup
 cp -r /var/www/ /home/home/backup
 cp -r /bin/ /home/home/backup
@@ -28,13 +32,13 @@ cp -r /boot/ /home/home/backup
 #cp -r /lib/ /home/home/backup
 #cp -r /usr /home/home/backup
 #cp /var/lib/libvirt/images/vs.img /home/home/backup
-mysqldump -u root -pXXXXXX --all-databases> /home/home/backup/dump-$( date '+%Y-%m-%d_%H-%M-%S' ).sql
+mysqldump -u root -p$sqlpasswd --all-databases> /home/home/backup/dump-$( date '+%Y-%m-%d_%H-%M-%S' ).sql
 zip -r /home/home/"backup-$(date +"%Y-%m-%d").zip" /home/home/backup/
 rclone copy /home/home/backup-*.zip gdrive:backup
 rm -rf /home/home/backup/*
 rm /home/home/backup-*
 sleep 60
-rclone ls gdrive:backup | cut -c 11- | sed '1,3d' >>/tmp/cleandrive.txt
+rclone ls gdrive:backup | cut -c 11- | sed '1,4d' >>/tmp/cleandrive.txt
 clean1=$(sed '1!D' /tmp/cleandrive.txt)
 clean2=$(sed '2!D' /tmp/cleandrive.txt)
 clean3=$(sed '3!D' /tmp/cleandrive.txt)
@@ -71,5 +75,6 @@ clean5=$(sed '5!D' /tmp/cleandrive.txt)
                         else echo "Nothink to delete"
                         fi
 rm /tmp/cleandrive.txt
-echo " ____Back up finished succsesfull_____"
+echo " ____Back up finished succsesfull to GDRIVE_____"
+/home/home/script/slack.sh backup_finished_successful_to_GDRIVE
 exit

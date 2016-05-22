@@ -1,0 +1,7 @@
+# script is located
+PATH=/home/home/script:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MAILTO=thugws@gmal.com
+
+# Activity reports every 10 minutes everyday
+03 03 */3 * * root /home/home/script/backup.sh  
+
