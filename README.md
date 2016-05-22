@@ -1,4 +1,1 @@
-Some usefull scripts!!
-backup 
-slack notification 
-cron jobs 
+Some usefull scripts!!/nbackup/nslack/nnotification/ncron jobs 
